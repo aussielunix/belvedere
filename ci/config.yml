@@ -1,0 +1,25 @@
+---
+
+github:
+  branch_develop: develop
+  branch_master: master
+  owner: aussielunix
+  repo: belvedere
+  uri: https://github.com/aussielunix/belvedere.git
+
+cf:
+  api: aa
+  skip_ssl_check: false
+  username: aa
+  password: aa
+  develop:
+    org: aaa
+    space: aaa
+    appname: aaa
+  master:
+    org: aaa
+    space: aaa
+    appname: aaa
+
+docker:
+  image: aussielunix/mkdocs

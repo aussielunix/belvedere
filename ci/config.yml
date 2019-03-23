@@ -8,18 +8,18 @@ github:
   uri: https://github.com/aussielunix/belvedere.git
 
 cf:
-  api: aa
+  api: https://api.run.pivotal.io
   skip_ssl_check: false
-  username: aa
-  password: aa
+  username: ((pws_creds.username))
+  password: ((pws_creds.password))
   develop:
-    org: aaa
-    space: aaa
-    appname: aaa
+    org: aussielunix
+    space: development
+    appname: belvedere-dev
   master:
-    org: aaa
-    space: aaa
-    appname: aaa
+    org: aussielunix
+    space: staging
+    appname: belvedere-staging
 
 docker:
   image: aussielunix/mkdocs

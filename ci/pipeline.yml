@@ -18,9 +18,12 @@ jobs:
           repository: ((docker.image))
           tag: latest
       run:
+        dir: git-develop
         path: mkdocs
-        args: ["build"]
-  public: false
+        args: ["build", "-d", "../site/"]
+  - put: deploy-develop
+    params:
+      manifest: git-develop/manifest.yml
   
 - name: website-master
   plan:
@@ -32,7 +35,7 @@ jobs:
       inputs:
       - name: git-master
       outputs:
-      - name: site
+        - name: site
       image_resource:
         type: docker-image
         source:
@@ -40,21 +43,11 @@ jobs:
           tag: latest
       run:
         path: mkdocs
-        args: ["build"]
-  - task: list-site-content
-    config:
-      platform: linux
-      inputs:
-      - name: git-master
-      image_resource:
-        type: docker-image
-        source: { repository: alpine }
-      run:
-        path: sh
-        args:
-        - -exc
-        - |
-          ls -R ./git-master:w
+        dir: git-master
+        args: ["build", "-d", "../site/"]
+  - put: deploy-master
+    params:
+      manifest: git-master/manifest.yml
 
 resources:
 - name: git-develop
@@ -68,22 +61,23 @@ resources:
   source:
     branch: ((github.branch_master))
     uri: ((github.uri))
-    
-#- name: deploy-develop
-#  source:
-#    api: ((cf.api))
-#    organization: ((cf.develop.org))
-#    password: ((cf.password))
-#    skip_cert_check: ((cf.skip_ssl_check))
-#    space: ((cf.develop.space))
-#    username: ((cf.username))
-#  type: cf
-    #- name: deploy-master
-    #  source:
-    #    api: ((cf.api))
-    #    organization: ((cf.master.org))
-    #    password: ((cf.password))
-    #    skip_cert_check: ((cf.skip_ssl_check))
-    #    space: ((cf.master.space))
-    #    username: ((cf.username))
-    #  type: cf
+
+- name: deploy-develop
+  type: cf
+  source:
+    api: ((cf.api))
+    organization: ((cf.develop.org))
+    password: ((cf.password))
+    skip_cert_check: ((cf.skip_ssl_check))
+    space: ((cf.develop.space))
+    username: ((cf.username))
+
+- name: deploy-master
+  type: cf
+  source:
+    api: ((cf.api))
+    organization: ((cf.master.org))
+    password: ((cf.password))
+    skip_cert_check: ((cf.skip_ssl_check))
+    space: ((cf.master.space))
+    username: ((cf.username))

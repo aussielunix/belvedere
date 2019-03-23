@@ -23,7 +23,7 @@ jobs:
         args: ["build", "-d", "../site/"]
   - put: deploy-develop
     params:
-      manifest: git-develop/manifest.yml
+      manifest: git-develop/manifest-dev.yml
   
 - name: website-master
   plan:
@@ -47,7 +47,7 @@ jobs:
         args: ["build", "-d", "../site/"]
   - put: deploy-master
     params:
-      manifest: git-master/manifest.yml
+      manifest: git-master/manifest-staging.yml
 
 resources:
 - name: git-develop

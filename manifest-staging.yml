@@ -8,10 +8,6 @@ defaults: &defaults
   path: /tmp/build/put/site/
 
 applications:
-- name: belvedere-dev
-  instances: 1
-  <<: *defaults
 - name: belvedere-staging
   instances: 2
   <<: *defaults
-

@@ -1,0 +1,13 @@
+---
+
+defaults: &defaults
+  buildpacks:
+    - staticfile_buildpack
+  memory: 64M
+  disk_quota: 256M
+  path: /tmp/build/put/site/
+
+applications:
+- name: belvedere-dev
+  instances: 1
+  <<: *defaults

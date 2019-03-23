@@ -1,7 +1,17 @@
 ---
 
-path: site/
-instances: 2
-memory: 64M
-disk_quota: 256M
-buildpack: staticfile_buildpack
+defaults: &defaults
+  buildpacks:
+    - staticfile_buildpack
+  memory: 64M
+  disk_quota: 256M
+  path: site/
+
+applications:
+- name: belvedere-dev
+  instances: 1
+  <<: *defaults
+- name: belvedere-staging
+  instances: 2
+  <<: *defaults
+
